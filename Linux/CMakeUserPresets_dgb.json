@@ -1,0 +1,34 @@
+{
+  "version": 4,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23
+  },
+  "include": [
+    "../CMakeUserPresets_common.json"
+  ],
+  "configurePresets": [
+    {
+      "name": "default-dgb7",
+      "displayName": "Default Linux settings with dgb7 plugins in Debug mode",
+      "description": "dGB7 plugin Debug",
+      "inherits": "dgb-common-7",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "default-dgbmain",
+      "displayName": "Default Linux settings with dgbmain plugins in Debug mode",
+      "description": "dGBmain plugin Debug",
+      "inherits": "dgb-common-main",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    }
+  ]
+}
