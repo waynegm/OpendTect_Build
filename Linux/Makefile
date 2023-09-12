@@ -209,4 +209,3 @@ bldodpybind:
 bldodpybinddev:
 	docker run $(DOCKEROPTS_6.6) base_gcc5.4 /bin/bash -c "cd /Build/bld/odpybinddev;make -j 14 install"
 
-$(info $(shell mkdir -p $(DIRS)))

@@ -39,8 +39,14 @@ RUN	yum -y update && \
 	rm -rf /var/cache/yum
 
 WORKDIR /opt
-COPY ../../bin/depends/inst_gcc_950.tar.bz2 .
+COPY inst_gcc_950.tar.bz2 .
 RUN tar -jxf inst_gcc_950.tar.bz2 && rm inst_gcc_950.tar.bz2
+
+RUN	yum -y update && \
+	yum -y install epel-release && \
+	yum -y install p7zip p7zip-plugins  && \
+	yum clean all && \
+	rm -rf /var/cache/yum
 
 ENV TZ=Australia/Brisbane
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
