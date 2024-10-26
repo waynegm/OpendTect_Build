@@ -9,14 +9,10 @@
   ],
   "configurePresets": [
     {
-      "name": "default",
-      "displayName": "Default Linux settings in Debug mode",
-      "description": "Defaults Debug",
-      "inherits": [
-	"common-main",
-	"breakpad",
-	"doxygen"
-      ],
+      "name": "default-odmain",
+      "displayName": "Default Linux settings for odmain in Debug mode",
+      "description": "Defaults odmain Debug",
+      "inherits": "odmain",
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -24,21 +20,10 @@
       }
     },
     {
-      "name": "default-pro",
-      "displayName": "Default Linux settings for OpendTectPro in Debug mode",
-      "description": "Defaults Debug for OpendTectPro",
-      "inherits": "common-main-pro",
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Linux"
-      }
-    },
-     {
-      "name": "default-release",
-      "displayName": "Default Linux settings in Release mode",
-      "description": "Defaults Release",
-      "inherits": "common-main-release",
+      "name": "default-odmain-pro",
+      "displayName": "Default Linux settings for odmain_pro in Debug mode",
+      "description": "Defaults odmain_pro Debug",
+      "inherits": "odmain-pro",
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -46,61 +31,16 @@
       }
     },
     {
-      "name": "default-dgb",
-      "displayName": "Default Linux settings with dgb plugins in Debug mode",
-      "description": "OD + dGB Debug",
+      "name": "default-dgbmain",
+      "displayName": "Default Linux settings for dgbmain in Debug mode",
+      "description": "Defautls dgbmain Debug",
       "inherits": [
-	"default",
-	"dgb-common"
+	"default-odmain-pro",
+	"dgbmain"
       ],
       "cacheVariables": {
 	"PLUGIN_DIR": "${sourceDir}/../dgb/plugins"
       },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Linux"
-      }
-    },
-    {
-      "name": "default-dgb-release",
-      "displayName": "Default Linux settings with dgb plugins in Release mode",
-      "description": "OD + dGB Release",
-      "inherits": [
-	"default-release",
-	"dgb-common-release"
-      ],
-      "cacheVariables": {
-        "PLUGIN_DIR": "${sourceDir}/../dgb_rel/plugins"
-      },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Linux"
-      }
-    },
-    {
-      "name": "default-qt6",
-      "displayName": "Default Linux settings in Debug mode (Qt6)",
-      "description": "Defaults Debug (Qt6)",
-      "inherits": [
-	"qt6",
-	"default"
-      ],
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Linux"
-      }
-    },
-    {
-      "name": "default-dgb-qt6",
-      "displayName": "Default Linux settings with dgb plugins in Debug mode (Qt6)",
-      "description": "OD + dGB Debug (Qt6)",
-      "inherits": [
-	"qt6",
-	"default-dgb"
-      ],
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",

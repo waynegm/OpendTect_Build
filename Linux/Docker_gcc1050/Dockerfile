@@ -1,6 +1,6 @@
 # Build Centos 7 based container for building OpendTect with gcc9
 #
-FROM centos:7 AS base_gcc9
+FROM centos:7 AS base_gcc1050
 LABEL description="Wayne Mogg <wayne.mogg@gmail.com>"
 LABEL maintainer="Wayne Mogg <wayne.mogg@gmail.com>"
 RUN	ulimit -n 1024 && \
@@ -38,12 +38,12 @@ RUN	alternatives	--install /usr/local/bin/cmake cmake /Build/qt/Tools/CMake/bin/
 			--family cmake
 
 WORKDIR /opt
-COPY inst_gcc_950.tar.bz2 .
-RUN tar -jxf inst_gcc_950.tar.bz2 && rm inst_gcc_950.tar.bz2
+COPY inst_gcc_1050.tar.bz2 .
+RUN tar -jxf inst_gcc_1050.tar.bz2 && rm inst_gcc_1050.tar.bz2
 
 ENV TZ=Australia/Brisbane
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-ENV PATH=/opt/inst950/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ENV LD_LIBRARY_PATH=/opt/inst950/lib64:/opt/inst950/lib
-ENV CC=/opt/inst950/bin/gcc-9.5
-ENV CXX=/opt/inst950/bin/g++-9.5
+ENV PATH=/opt/inst1050/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV LD_LIBRARY_PATH=/opt/inst1050/lib64:/opt/inst1050/lib
+ENV CC=/opt/inst1050/bin/gcc-10.5
+ENV CXX=/opt/inst1050/bin/g++-10.5

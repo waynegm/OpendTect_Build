@@ -1,0 +1,120 @@
+{
+  "version": 4,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23
+  },
+  "include": [
+    "../CMakeUserPresets_common.json"
+  ],
+  "configurePresets": [
+    {
+      "name": "default-wmplugin",
+      "displayName": "Default Linux settings for wmplugins in Debug mode",
+      "description": "Defaults wmplugins Debug",
+      "inherits": [
+	  "common",
+	  "sqlite",
+	  "proj"
+      ],
+      "cacheVariables": {
+	  "CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/ODPlugins/2025",
+	  "CMAKE_PREFIX_PATH": "$env{DEV_ROOT}/bin/wmplugin_deps/Debug",
+	  "WMDEPS_DIR": "$env{DEV_ROOT}/bin/wmplugin_deps/Debug"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "default-wmplugin-rel",
+      "displayName": "Default Linux settings for wmplugins in Release mode",
+      "description": "Defaults wmplugins Release",
+      "inherits": [
+	  "default-wmplugin"
+      ],
+      "cacheVariables": {
+      	  "CMAKE_DEFAULT_BUILD_TYPE": "Release",
+	  "CMAKE_PREFIX_PATH": "$env{DEV_ROOT}/bin/wmplugin_deps/Release",
+	  "WMDEPS_DIR": "$env{DEV_ROOT}/bin/wmplugin_deps/Release"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "default-wmplugin-deps",
+      "displayName": "Default Linux settings for wmplugin dependencies in Debug mode",
+      "description": "Defaults wmplugin_deps Debug",
+      "inherits": [
+	  "common",
+	  "sqlite",
+	  "proj"
+      ],
+      "cacheVariables": {
+	  "CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/${sourceDirName}/Debug"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "default-wmplugin-deps-rel",
+      "displayName": "Default Linux settings for wmplugin dependencies in Release mode",
+      "description": "Defaults wmplugin_deps Release",
+      "inherits": [
+	  "default-wmplugin-deps"
+      ],
+      "cacheVariables": {
+	  "CMAKE_DEFAULT_BUILD_TYPE": "Release",
+	  "CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/${sourceDirName}/Release"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "default-wmplugin-deps-7",
+      "displayName": "Default Linux settings for wmplugin dependencies 7.0 in Debug mode",
+      "description": "Defaults wmplugin_deps_7 Debug",
+      "inherits": [
+	  "common",
+	  "sqlite",
+	  "proj"
+      ],
+      "cacheVariables": {
+	  "CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/${sourceDirName}/Debug"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "default-wmplugin-deps-7-rel",
+      "displayName": "Default Linux settings for wmplugin dependencies 7.0 in Release mode",
+      "description": "Defaults wmplugin_deps_7 Release",
+      "inherits": [
+	  "default-wmplugin-deps-7"
+      ],
+      "cacheVariables": {
+	  "CMAKE_DEFAULT_BUILD_TYPE": "Release",
+	  "CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/${sourceDirName}/Release"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    }
+  ]
+}

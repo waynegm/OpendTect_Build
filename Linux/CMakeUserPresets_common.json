@@ -6,19 +6,26 @@
     },
     "configurePresets": [
 	{
+	    "name": "environment",
+	    "hidden": true,
+	    "environment": {
+		"DEV_ROOT": "/opt/Development",
+		"DTECT_DATA": "/mnt/Data/seismic/ODData"
+	    }
+	},
+	{
 	    "name": "common",
 	    "hidden": true,
-	    "generator": "Ninja",
-	    "binaryDir": "/Build/bld/${sourceDirName}",
+	    "inherits": "environment",
+	    "generator": "Ninja Multi-Config",
+	    "binaryDir": "$env{DEV_ROOT}/bld/${sourceDirName}",
 	    "environment": {
-		"APPMAN_DIR": "/Build",
-		"APPS_DIR": "/Build/bin/depends",
-		"DTECT_DATA": "/mnt/Data/seismic/ODData"
+		"APPMAN_DIR": "$env{DEV_ROOT}/bin/depends"
 	    },
 	    "cacheVariables": {
-		"CMAKE_BUILD_TYPE": "Debug",
-		"CMAKE_INSTALL_PREFIX": "/Build/bin/${sourceDirName}",
-		"CMAKE_MAKE_PROGRAM": "$env{APPMAN_DIR}/qt/Tools/Ninja/ninja",
+		"CMAKE_MAKE_PROGRAM": "$env{DEV_ROOT}/qt/Tools/Ninja/ninja",
+		"CMAKE_DEFAULT_BUILD_TYPE": "Debug",
+		"CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/${sourceDirName}",
 		"OD_TESTDATA_DIR": "$env{DTECT_DATA}/testsurveys/ODData"
 	    }
 	},
@@ -26,69 +33,73 @@
 	    "name": "common-pro",
 	    "hidden": true,
 		"inherits": [ "common" ],
-	    "binaryDir": "/Build/bld/${sourceDirName}_pro",
+	    "binaryDir": "$env{DEV_ROOT}/bld/${sourceDirName}_pro",
 	    "cacheVariables": {
-		"CMAKE_INSTALL_PREFIX": "/Build/bin/${sourceDirName}_pro"
+		"CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/${sourceDirName}_pro"
 	    }
 	},
 	{
-	    "name": "gcc9",
+	    "name": "gcc10",
 	    "hidden": true,
 	    "cacheVariables": {
-		"CC": "gcc-9.5",
-		"CXX": "g++-9.5"
+		"CC": "gcc-10.5",
+		"CXX": "g++-10.5"
 	    }
 	},
 	{
 	    "name": "qt5",
 	    "hidden": true,
 	    "cacheVariables": {
-		"QTDIR": "$env{APPMAN_DIR}/qt/5.15.2/gcc_64"
+		"QTDIR": "$env{DEV_ROOT}/qt/5.15.2/gcc_64"
 	    }
 	},
 	{
 	    "name": "qt6",
 	    "hidden": true,
 	    "cacheVariables": {
-		"QTDIR": "$env{APPMAN_DIR}/qt/Qt/6.4.3/gcc_64"
+		"QTDIR": "$env{DEV_ROOT}/qt/6.8.0/gcc_64"
 	    }
 	},
 	{
 	    "name": "osg",
 	    "hidden": true,
 	    "cacheVariables": {
-		"OSG_DIR": "$env{APPS_DIR}/osg/inst-365_rhel7_950"
+		"OSG_DIR": "$env{APPMAN_DIR}/osg/inst-365_rhel8_1050"
 	    }
 	},
 	{
 	    "name": "hdf5",
 	    "hidden": true,
 	    "cacheVariables": {
-		"HDF5_ROOT": "$env{APPS_DIR}/hdf5/inst-1.14.0_rhel7_950"
+		"HDF5_ROOT": "$env{APPMAN_DIR}/hdf5/inst_1.14.5_rhel8_1050"
 	    }
 	},
 	{
-	    "name": "od-basic",
-	    "hidden": true,
-	    "inherits": [
-		"qt5",
-		"osg",
-		"hdf5",
-		"openssl"
-	    ]
-	},
-	{
-	    "name": "openssl",
+	    "name": "openssl3",
 	    "hidden": true,
 	    "cacheVariables": {
-		"OPENSSL_ROOT_DIR": "$env{APPS_DIR}/openssl/inst-1.1.1t_rhel7_950"
+		"OPENSSL_ROOT_DIR": "$env{APPMAN_DIR}/openssl/inst_3.3.2_rhel8_1050"
 	    }
 	},
 	{
-	    "name": "openssl-66",
+	    "name": "openssl1",
 	    "hidden": true,
 	    "cacheVariables": {
-		"OPENSSL_ROOT_DIR": "$env{APPS_DIR}/openssl/inst-1.1.1t_rhel7_540"
+		"OPENSSL_ROOT_DIR": "$env{APPMAN_DIR}/openssl/inst-1.1.1w_rhel7_1050"
+	    }
+	},
+	{
+	    "name": "sqlite",
+	    "hidden": true,
+	    "cacheVariables": {
+		"SQLite3_ROOT": "$env{APPMAN_DIR}/sqlite/inst_3.46.1_rhel8_1050"
+	    }
+	},
+	{
+	    "name": "proj",
+	    "hidden": true,
+	    "cacheVariables": {
+		"PROJ_DIR": "$env{APPMAN_DIR}/proj9/inst_9.5.0_rhel8_1050"
 	    }
 	},
 	{
@@ -96,134 +107,116 @@
 	    "hidden": true,
 	    "cacheVariables": {
 		"OD_ENABLE_BREAKPAD": { "type": "BOOL", "value": "ON" },
-		"BREAKPAD_DIR": "$env{APPS_DIR}/breakpad/inst-20200604_rhel7_950"
+		"BREAKPAD_DIR": "$env{APPMAN_DIR}/breakpad/inst-2023.06.01_rhel8_1050"
 	    }
 	},
 	{
-	    "name": "doxygen",
-	    "hidden": true,
-	    "cacheVariables": {
-		"BUILD_DOCUMENTATION": { "type": "BOOL", "value": "OFF" },
-		"DOXYGEN_EXECUTABLE": "$env{APPS_DIR}/doxygen/inst-1.9.1_gcc540/bin/doxygen"
-	    }
-	},
-	{
-	    "name": "common-main",
+	    "name": "od-basic",
 	    "hidden": true,
 	    "inherits": [
-		"common",
-		"od-basic"
-	    ],
-	    "cacheVariables": {
-		"PROJ_DIR": "$env{APPS_DIR}/proj9/inst-9.2.0_rhel7_950",
-		"SQLITE_DIR": "$env{APPS_DIR}/sqlite/inst-3.40.1_rhel7_950"
-	    }
-	},
-	{
-	    "name": "common-main-pro",
-	    "hidden": true,
-	    "inherits": [
-		"common-pro",
-		"od-basic"
-	    ],
-	    "cacheVariables": {
-		"PROJ_DIR": "$env{APPS_DIR}/proj9/inst-9.2.0_rhel7_950",
-		"SQLITE_DIR": "$env{APPS_DIR}/sqlite/inst-3.40.1_rhel7_950"
-	    }
-	},
-	{
-	    "name": "common-66",
-	    "hidden": true,
-	    "inherits": [
-		"common",
-		"qt5"
-	    ],
-	    "cacheVariables": {
-		"OSG_DIR": "$env{APPS_DIR}/osg/inst-365_rhel7_540",
-		"HDF5_ROOT": "$env{APPS_DIR}/hdf5/inst-1.12.2_rhel7_540"
-	    }
-	},
-	{
-	    "name": "release",
-	    "hidden": true,
-	    "inherits": "breakpad",
-	    "cacheVariables": {
-		"CMAKE_BUILD_TYPE": "Release",
-		"CMAKE_EXE_LINKER_FLAGS_RELEASE": "-s",
-		"CMAKE_SHARED_LINKER_FLAGS_RELEASE": "-s"
-	    }
-	},
-	{
-	    "name": "common-main-release",
-	    "hidden": true,
-	    "inherits": [
-		"release",
-		"common-main"
+		"osg",
+		"hdf5",
+		"sqlite",
+		"proj"
 	    ]
 	},
 	{
-	    "name": "common-66-release",
-		"hidden": true,
-		"inherits": [
-		    "release",
-		    "common-66"
-		]
-	},
-	{
-	    "name": "dgb-common-66",
+	    "name": "odmain",
 	    "hidden": true,
+	    "inherits": [
+		"common",
+		"qt6",
+		"openssl3",
+		"od-basic"
+	    ],
 	    "cacheVariables": {
-		"Python_ROOT_DIR": "/opt/seismic/OpendTectPro_6/Python",
-		"OD_RUN_LMSTRIP": { "type": "BOOL", "value": "ON" },
-		"BUILD_dGBPDF3D": { "type": "BOOL", "value": "OFF" },
-		"BUILD_FAULT_TRACKER": { "type": "BOOL", "value": "ON" },
-		"Installer_VERSION": "2023.02.20"
+		"CMAKE_CXX_FLAGS": "$env{CXX_FLAGS}",
+		"OD_NO_QPRINTSUPPORT": { "type": "BOOL", "value": "OFF" },
+		"OD_NO_QSQL": { "type": "BOOL", "value": "OFF" }
 	    }
 	},
 	{
-	    "name": "dgb-common",
+	    "name": "od70",
 	    "hidden": true,
-	    "inherits": ["dgb-common-66", "common-main-pro"],
+	    "inherits": [
+		"common",
+		"qt5",
+		"openssl1",
+		"od-basic"
+	    ],
 	    "cacheVariables": {
-		"CMAKE_INSTALL_PREFIX": "/Build/bin/${sourceDirName}_pro",
-		"Python_ROOT_DIR": "/opt/seismic/OpendTectPro_7/Python",
+		"OSG_DIR": "$env{APPMAN_DIR}/osg/inst-365_rhel7_1050",
+		"HDF5_ROOT": "$env{APPMAN_DIR}/hdf5/inst-1.14.5_rhel7_1050",
+		"PROJ_DIR": "$env{APPMAN_DIR}/proj9/inst-9.3.1_rhel7_1050",
+		"SQLite3_ROOT": "$env{APPMAN_DIR}/sqlite/inst-3.44.2_rhel7_1050"
+	    }
+	},
+	{
+	    "name": "odmain-pro",
+	    "hidden": true,
+	    "inherits": [
+		"odmain",
+		"common-pro"
+	    ],
+	    "binaryDir": "$env{DEV_ROOT}/bld/${sourceDirName}_pro",
+	    "cacheVariables": {
+		"CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/odmain_pro"
+	    }
+	},
+	{
+	    "name": "od70-pro",
+	    "hidden": true,
+	    "inherits": [
+		"od70",
+		"common-pro"
+	    ],
+	    "binaryDir": "$env{DEV_ROOT}/bld/${sourceDirName}_pro",
+	    "cacheVariables": {
+		"CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/od7.0_pro"
+	    }
+	},
+	{
+	    "name": "dgb66",
+	    "hidden": true,
+	    "cacheVariables": {
+		"CMAKE_CXX_FLAGS": "$env{CXX_FLAGS}",
+		"OD_RUN_LMSTRIP": { "type": "BOOL", "value": "ON" },
+		"BUILD_FAULT_TRACKER": { "type": "BOOL", "value": "ON" },
 		"BUILD_dGBPDF3D": { "type": "BOOL", "value": "OFF" },
+		"Installer_VERSION": "2024.10.01"
+	    }
+	},
+	{
+	    "name": "dgb70",
+	    "hidden": true,
+	    "inherits": "dgb66",
+	    "cacheVariables": {
+		"BUILD_AWS_PLUGIN": { "type": "BOOL", "value": "ON" },
 		"BUILD_OPENVDS": { "type": "BOOL", "value": "ON" },
 		"BUILD_OPENZGY": { "type": "BOOL", "value": "ON" },
-		"OPENVDS_ROOT": "$env{APPS_DIR}/openvds/openvds+-3.2.6",
-		"OPENZGY_ROOT": "$env{APPS_DIR}/openzgy/inst20210902_rhel7_540"
+		"AWSSDK_ROOT": "$env{APPMAN_DIR}/aws-sdk/inst-1.11.400_rhel7_1050",
+		"OPENVDS_ROOT": "$env{APPMAN_DIR}/openvds/openvds+-3.4.4",
+		"OPENZGY_ROOT": "$env{APPMAN_DIR}/openzgy/inst-0.2.1149_rhel8_1030",
+		"CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/od7.0_pro",
+		"OD_BINARY_BASEDIR": "$env{DEV_ROOT}/bld/od7.0_pro"
+
 	    }
 	},
 	{
-		"name": "dgb-common-7",
+	    "name": "dgbmain",
 	    "hidden": true,
-	    "inherits": "dgb-common",
-		"environment": {
-			"BRANCH": "7.0"
-		},
-		"binaryDir": "/Build/bld/${sourceDirName}",
+	    "inherits": "common",
+	    "binaryDir": "$env{DEV_ROOT}/bld/dgbmain",
 	    "cacheVariables": {
-			"CMAKE_INSTALL_PREFIX": "/Build/bin/od$env{BRANCH}_pro",
-			"OD_BINARY_BASEDIR": "/Build/bld/od$env{BRANCH}_pro"
-			}
-	},
-	{
-		"name": "dgb-common-main",
-	    "hidden": true,
-	    "inherits": "dgb-common",
-		"environment": {
-			"BRANCH": "main"
-		},
-		"binaryDir": "/Build/bld/${sourceDirName}",
-	    "cacheVariables": {
-			"CMAKE_INSTALL_PREFIX": "/Build/bin/od$env{BRANCH}_pro",
-			"OD_BINARY_BASEDIR": "/Build/bld/od$env{BRANCH}_pro"
-			}
-	},
-	{
-	    "name": "dgb-common-release",
-	    "hidden": true,
-	    "inherits": "dgb-common"
+		"BUILD_AWS_PLUGIN": { "type": "BOOL", "value": "ON" },
+		"BUILD_OPENVDS": { "type": "BOOL", "value": "ON" },
+		"BUILD_OPENZGY": { "type": "BOOL", "value": "ON" },
+		"AWSSDK_ROOT": "$env{APPMAN_DIR}/aws-sdk/inst_1.11.400_rhel8_1050",
+		"OPENVDS_ROOT": "$env{APPMAN_DIR}/openvds/openvds+-3.4.4",
+		"OPENZGY_ROOT": "$env{APPMAN_DIR}/openzgy/inst-0.2.1149_rhel8_1030",
+		"CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/odmain_pro",
+		"OD_BINARY_BASEDIR": "$env{DEV_ROOT}/bld/odmain_pro"
+	    }
 	}
     ]
 }

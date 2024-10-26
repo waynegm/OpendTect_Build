@@ -12,7 +12,7 @@
       "name": "default-dgb7",
       "displayName": "Default Linux settings with dgb7 plugins in Debug mode",
       "description": "dGB7 plugin Debug",
-      "inherits": "dgb-common-7",
+      "inherits": "dgb70",
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -23,7 +23,7 @@
       "name": "default-dgbmain",
       "displayName": "Default Linux settings with dgbmain plugins in Debug mode",
       "description": "dGBmain plugin Debug",
-      "inherits": "dgb-common-main",
+      "inherits": "dgbmain",
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
