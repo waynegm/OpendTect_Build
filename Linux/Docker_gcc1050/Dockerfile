@@ -3,6 +3,9 @@
 FROM centos:7 AS base_gcc1050
 LABEL description="Wayne Mogg <wayne.mogg@gmail.com>"
 LABEL maintainer="Wayne Mogg <wayne.mogg@gmail.com>"
+RUN	sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/CentOS-*.repo && \
+	sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/CentOS-*.repo && \
+	sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/CentOS-*.repo
 RUN	ulimit -n 1024 && \
 	yum -y update && \
 	yum -y groupinstall 'Development Tools' && \

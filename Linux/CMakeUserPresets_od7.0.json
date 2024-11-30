@@ -9,50 +9,12 @@
   ],
   "configurePresets": [
     {
-      "name": "default",
-      "displayName": "Default Linux settings in Debug mode",
-      "description": "Defaults Debug",
-      "inherits": "common-main",
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Linux"
-      }
-    },
-    {
-      "name": "default-pro",
-      "displayName": "Default Linux settings for OpendTectPro in Debug mode",
-      "description": "Defaults Debug for OpendTectPro",
-      "inherits": "common-main-pro",
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Linux"
-      }
-    },
-    {
-      "name": "default-release",
-      "displayName": "Default Linux settings in Release mode",
-      "description": "Defaults Release",
-      "inherits": "common-main-release",
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Linux"
-      }
-    },
-    {
-      "name": "default-dgb",
-      "displayName": "Default Linux settings with dgb plugins in Debug mode",
-      "description": "OD + dGB Debug",
-      "inherits": [
-	"default",
-	"dgb-common"
-      ],
-      "binaryDir": "/Build/bld/${sourceDirName}_pro",
+      "name": "default-od7",
+      "displayName": "Default Linux settings for od7.0 in Debug mode",
+      "description": "Defaults od7.0 Debug",
+      "inherits": "od70",
       "cacheVariables": {
-  "CMAKE_INSTALL_PREFIX": "/Build/bin/${sourceDirName}_pro",
-	"PLUGIN_DIR": "${sourceDir}/../dgb7.0/plugins"
+	"CMAKE_MAKE_PROGRAM": "$env{DEV_ROOT}/qt/Tools/Ninja/ninja"
       },
       "condition": {
         "type": "equals",
@@ -61,15 +23,40 @@
       }
     },
     {
-      "name": "default-dgb-release",
-      "displayName": "Default Linux settings with dgb plugins in Release mode",
-      "description": "OD + dGB Release",
+      "name": "default-od7-pro",
+      "displayName": "Default Linux settings for od7_pro in Debug mode",
+      "description": "Defaults od7_pro Debug",
+      "inherits": "od70-pro",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "default-dgb7",
+      "displayName": "Default Linux settings for dgb7 in Debug mode",
+      "description": "Defaults dgb7 Debug",
       "inherits": [
-	"default-release",
-	"dgb-common-release"
+	  "default-od7-pro",
+	  "dgb70"
       ],
+      "binaryDir": "$env{DEV_ROOT}/bld/dgb7.0",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+        {
+      "name": "default-od7dev-pro",
+      "displayName": "Default Linux settings for od7_pro in Release mode",
+      "description": "Defaults od7_pro Release",
+      "inherits": "od70",
+      "binaryDir": "$env{DEV_ROOT}/bld/od7.0_dev_pro",
       "cacheVariables": {
-        "PLUGIN_DIR": "${sourceDir}/../dgb7.0_rel/plugins"
+	"CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/od7.0_dev_pro",
+	"CMAKE_DEFAULT_BUILD_TYPE": "Release"
       },
       "condition": {
         "type": "equals",
@@ -78,27 +65,25 @@
       }
     },
     {
-      "name": "default-qt6",
-      "displayName": "Default Linux settings in Debug mode (Qt6)",
-      "description": "Defaults Debug (Qt6)",
+      "name": "default-dgb7dev",
+      "displayName": "Default Linux settings for dgb7 in Release mode",
+      "description": "Defaults dgb7 Release",
       "inherits": [
-	"qt6",
-	"default"
+	  "default-od7dev-pro",
+	  "dgb70"
       ],
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Linux"
-      }
-    },
-    {
-      "name": "default-dgb-qt6",
-      "displayName": "Default Linux settings with dgb plugins in Debug mode (Qt6)",
-      "description": "OD + dGB Debug (Qt6)",
-      "inherits": [
-	"qt6",
-	"default-dgb"
-      ],
+      "binaryDir": "$env{DEV_ROOT}/bld/dgb7.0_dev",
+      "cacheVariables": {
+	"BUILD_AWS_PLUGIN": { "type": "BOOL", "value": "ON" },
+	"BUILD_OPENVDS": { "type": "BOOL", "value": "ON" },
+	"BUILD_OPENZGY": { "type": "BOOL", "value": "ON" },
+	"AWSSDK_ROOT": "$env{APPMAN_DIR}/aws-sdk/inst-1.11.400_rhel7_1050",
+	"openvds_ROOT": "$env{APPMAN_DIR}/openvds/openvds+-3.4.4",
+	"OPENZGY_ROOT": "$env{APPMAN_DIR}/openzgy/inst-0.2.1149_rhel8_1030",
+	"CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/od7.0_dev_pro",
+	"CMAKE_DEFAULT_BUILD_TYPE": "Release",
+	"OD_BINARY_BASEDIR": "$env{DEV_ROOT}/bld/od7.0_dev_pro"
+      },
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",

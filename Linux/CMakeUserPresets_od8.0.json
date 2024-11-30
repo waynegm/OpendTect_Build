@@ -1,0 +1,51 @@
+{
+  "version": 4,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23
+  },
+  "include": [
+    "../CMakeUserPresets_common.json"
+  ],
+  "configurePresets": [
+    {
+      "name": "default-od8",
+      "displayName": "Default Linux settings for od8.0 in Debug mode",
+      "description": "Defaults od8.0 Debug",
+      "inherits": "od80",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "default-od8-pro",
+      "displayName": "Default Linux settings for od8.0_pro in Debug mode",
+      "description": "Defaults od8.0_pro Debug",
+      "inherits": "od80-pro",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "default-dgb8",
+      "displayName": "Default Linux settings for dgb8.0 in Debug mode",
+      "description": "Defaults dgb8.0 Debug",
+      "inherits": [
+	"default-od8-pro",
+	"dgbmain"
+      ],
+      "cacheVariables": {
+	"PLUGIN_DIR": "${sourceDir}/../dgb/plugins"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    }
+  ]
+}

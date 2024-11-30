@@ -24,7 +24,7 @@
 	    },
 	    "cacheVariables": {
 		"CMAKE_MAKE_PROGRAM": "$env{DEV_ROOT}/qt/Tools/Ninja/ninja",
-		"CMAKE_DEFAULT_BUILD_TYPE": "Debug",
+		"CMAKE_CONFIGURATION_TYPES": "Debug;Release",
 		"CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/${sourceDirName}",
 		"OD_TESTDATA_DIR": "$env{DTECT_DATA}/testsurveys/ODData"
 	    }
@@ -47,38 +47,46 @@
 	    }
 	},
 	{
+	    "name": "gcc13",
+	    "hidden": true,
+	    "cacheVariables": {
+		"CC": "gcc",
+		"CXX": "g++"
+	    }
+	},
+	{
 	    "name": "qt5",
 	    "hidden": true,
 	    "cacheVariables": {
-		"QTDIR": "$env{DEV_ROOT}/qt/5.15.2/gcc_64"
+		"QT_ROOT": "$env{DEV_ROOT}/qt/5.15.2/gcc_64"
 	    }
 	},
 	{
 	    "name": "qt6",
 	    "hidden": true,
 	    "cacheVariables": {
-		"QTDIR": "$env{DEV_ROOT}/qt/6.8.0/gcc_64"
+		"QT_ROOT": "$env{DEV_ROOT}/qt/6.8.0/gcc_64"
 	    }
 	},
 	{
 	    "name": "osg",
 	    "hidden": true,
 	    "cacheVariables": {
-		"OSG_DIR": "$env{APPMAN_DIR}/osg/inst-365_rhel8_1050"
+		"OSG_ROOT": "$env{APPMAN_DIR}/osg/inst_365_rhel8_1331"
 	    }
 	},
 	{
 	    "name": "hdf5",
 	    "hidden": true,
 	    "cacheVariables": {
-		"HDF5_ROOT": "$env{APPMAN_DIR}/hdf5/inst_1.14.5_rhel8_1050"
+		"HDF5_ROOT": "$env{APPMAN_DIR}/hdf5/inst_1.14.5_rhel8_1331"
 	    }
 	},
 	{
 	    "name": "openssl3",
 	    "hidden": true,
 	    "cacheVariables": {
-		"OPENSSL_ROOT_DIR": "$env{APPMAN_DIR}/openssl/inst_3.3.2_rhel8_1050"
+		"OPENSSL_ROOT_DIR": "$env{APPMAN_DIR}/openssl/inst_3.3.2_rhel8_1331"
 	    }
 	},
 	{
@@ -92,14 +100,14 @@
 	    "name": "sqlite",
 	    "hidden": true,
 	    "cacheVariables": {
-		"SQLite3_ROOT": "$env{APPMAN_DIR}/sqlite/inst_3.46.1_rhel8_1050"
+		"SQLite3_ROOT": "$env{APPMAN_DIR}/sqlite/inst_3.46.1_rhel8_1331"
 	    }
 	},
 	{
 	    "name": "proj",
 	    "hidden": true,
 	    "cacheVariables": {
-		"PROJ_DIR": "$env{APPMAN_DIR}/proj9/inst_9.5.0_rhel8_1050"
+		"PROJ_ROOT": "$env{APPMAN_DIR}/proj9/inst_9.5.0_rhel8_1331"
 	    }
 	},
 	{
@@ -107,7 +115,7 @@
 	    "hidden": true,
 	    "cacheVariables": {
 		"OD_ENABLE_BREAKPAD": { "type": "BOOL", "value": "ON" },
-		"BREAKPAD_DIR": "$env{APPMAN_DIR}/breakpad/inst-2023.06.01_rhel8_1050"
+		"BREAKPAD_ROOT": "$env{APPMAN_DIR}/breakpad/inst-2023.06.01_rhel8_1331"
 	    }
 	},
 	{
@@ -125,6 +133,23 @@
 	    "hidden": true,
 	    "inherits": [
 		"common",
+		"gcc13",
+		"qt6",
+		"openssl3",
+		"od-basic"
+	    ],
+	    "cacheVariables": {
+		"CMAKE_CXX_FLAGS": "$env{CXX_FLAGS}",
+		"OD_NO_QPRINTSUPPORT": { "type": "BOOL", "value": "OFF" },
+		"OD_NO_QSQL": { "type": "BOOL", "value": "OFF" }
+	    }
+	},
+	{
+	    "name": "od80",
+	    "hidden": true,
+	    "inherits": [
+		"common",
+		"gcc13",
 		"qt6",
 		"openssl3",
 		"od-basic"
@@ -140,14 +165,15 @@
 	    "hidden": true,
 	    "inherits": [
 		"common",
+		"gcc10",
 		"qt5",
-		"openssl1",
-		"od-basic"
+		"openssl1"
 	    ],
+	    "binaryDir": "$env{DEV_ROOT}/bld/${sourceDirName}",
 	    "cacheVariables": {
-		"OSG_DIR": "$env{APPMAN_DIR}/osg/inst-365_rhel7_1050",
+		"OSG_ROOT": "$env{APPMAN_DIR}/osg/inst-365_rhel7_1050",
 		"HDF5_ROOT": "$env{APPMAN_DIR}/hdf5/inst-1.14.5_rhel7_1050",
-		"PROJ_DIR": "$env{APPMAN_DIR}/proj9/inst-9.3.1_rhel7_1050",
+		"PROJ_ROOT": "$env{APPMAN_DIR}/proj9/inst-9.3.1_rhel7_1050",
 		"SQLite3_ROOT": "$env{APPMAN_DIR}/sqlite/inst-3.44.2_rhel7_1050"
 	    }
 	},
@@ -161,6 +187,18 @@
 	    "binaryDir": "$env{DEV_ROOT}/bld/${sourceDirName}_pro",
 	    "cacheVariables": {
 		"CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/odmain_pro"
+	    }
+	},
+	{
+	    "name": "od80-pro",
+	    "hidden": true,
+	    "inherits": [
+		"od80",
+		"common-pro"
+	    ],
+	    "binaryDir": "$env{DEV_ROOT}/bld/${sourceDirName}_pro",
+	    "cacheVariables": {
+		"CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/od8.0_pro"
 	    }
 	},
 	{
@@ -190,16 +228,33 @@
 	    "name": "dgb70",
 	    "hidden": true,
 	    "inherits": "dgb66",
+	    "binaryDir": "$env{DEV_ROOT}/bld/dgb7.0",
 	    "cacheVariables": {
 		"BUILD_AWS_PLUGIN": { "type": "BOOL", "value": "ON" },
 		"BUILD_OPENVDS": { "type": "BOOL", "value": "ON" },
 		"BUILD_OPENZGY": { "type": "BOOL", "value": "ON" },
 		"AWSSDK_ROOT": "$env{APPMAN_DIR}/aws-sdk/inst-1.11.400_rhel7_1050",
-		"OPENVDS_ROOT": "$env{APPMAN_DIR}/openvds/openvds+-3.4.4",
+		"openvds_ROOT": "$env{APPMAN_DIR}/openvds/openvds+-3.4.4",
 		"OPENZGY_ROOT": "$env{APPMAN_DIR}/openzgy/inst-0.2.1149_rhel8_1030",
 		"CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/od7.0_pro",
 		"OD_BINARY_BASEDIR": "$env{DEV_ROOT}/bld/od7.0_pro"
 
+	    }
+	},
+	{
+	    "name": "dgb80",
+	    "hidden": true,
+	    "inherits": "common",
+	    "binaryDir": "$env{DEV_ROOT}/bld/dgbmain",
+	    "cacheVariables": {
+		"BUILD_AWS_PLUGIN": { "type": "BOOL", "value": "ON" },
+		"BUILD_OPENVDS": { "type": "BOOL", "value": "ON" },
+		"BUILD_OPENZGY": { "type": "BOOL", "value": "ON" },
+		"AWSSDK_ROOT": "$env{APPMAN_DIR}/aws-sdk/inst_1.11.400_rhel8_1050",
+		"openvds_ROOT": "$env{APPMAN_DIR}/openvds/openvds+-3.4.4",
+		"OPENZGY_ROOT": "$env{APPMAN_DIR}/openzgy/inst-0.2.1149_rhel8_1030",
+		"CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/odmain_pro",
+		"OD_BINARY_BASEDIR": "$env{DEV_ROOT}/bld/odmain_pro"
 	    }
 	},
 	{
@@ -212,7 +267,7 @@
 		"BUILD_OPENVDS": { "type": "BOOL", "value": "ON" },
 		"BUILD_OPENZGY": { "type": "BOOL", "value": "ON" },
 		"AWSSDK_ROOT": "$env{APPMAN_DIR}/aws-sdk/inst_1.11.400_rhel8_1050",
-		"OPENVDS_ROOT": "$env{APPMAN_DIR}/openvds/openvds+-3.4.4",
+		"openvds_ROOT": "$env{APPMAN_DIR}/openvds/openvds+-3.4.4",
 		"OPENZGY_ROOT": "$env{APPMAN_DIR}/openzgy/inst-0.2.1149_rhel8_1030",
 		"CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/odmain_pro",
 		"OD_BINARY_BASEDIR": "$env{DEV_ROOT}/bld/odmain_pro"

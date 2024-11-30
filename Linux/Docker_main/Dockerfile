@@ -31,16 +31,15 @@ RUN	dnf -y install https://rpms.remirepo.net/enterprise/remi-release-8.rpm && \
 		"libXtst" \
 		"libXi" \
 		"p7zip" \
-		"p7zip-plugins" && \
+		"p7zip-plugins" \
+		"gcc-toolset-13" && \
+	dnf -y clean all
+RUN	dnf -y install \
+		"gcc-toolset-13" \
+		"cmake" \
+		"ninja" && \
 	dnf -y clean all
 
 
-WORKDIR /opt
-COPY inst_gcc_1050.tar.bz2 .
-RUN tar --no-same-owner -jxf inst_gcc_1050.tar.bz2 && rm inst_gcc_1050.tar.bz2
 ENV TZ=Australia/Brisbane
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-ENV PATH=/opt/inst1050/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ENV LD_LIBRARY_PATH=/opt/inst1050/lib64:/opt/inst1050/lib
-ENV CC=/opt/inst1050/bin/gcc-10.5
-ENV CXX=/opt/inst1050/bin/g++-10.5

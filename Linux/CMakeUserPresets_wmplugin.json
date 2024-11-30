@@ -9,7 +9,7 @@
   ],
   "configurePresets": [
     {
-      "name": "default-wmplugin",
+      "name": "default-wmplugin-8",
       "displayName": "Default Linux settings for wmplugins in Debug mode",
       "description": "Defaults wmplugins Debug",
       "inherits": [
@@ -18,8 +18,9 @@
 	  "proj"
       ],
       "cacheVariables": {
+	  "OpendTect_DIR": "$env{DEV_ROOT}/bin/od8.0",
 	  "CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/ODPlugins/2025",
-	  "CMAKE_PREFIX_PATH": "$env{DEV_ROOT}/bin/wmplugin_deps/Debug",
+	  "CMAKE_PREFIX_PATH": "$env{DEV_ROOT}/bin/wmplugin_deps/$<CONFIG>",
 	  "WMDEPS_DIR": "$env{DEV_ROOT}/bin/wmplugin_deps/Debug"
       },
       "condition": {
@@ -29,15 +30,13 @@
       }
     },
     {
-      "name": "default-wmplugin-rel",
+      "name": "default-wmplugin-8-rel",
       "displayName": "Default Linux settings for wmplugins in Release mode",
       "description": "Defaults wmplugins Release",
-      "inherits": [
-	  "default-wmplugin"
-      ],
+      "inherits": "default-wmplugin-8",
+      "binaryDir": "$env{DEV_ROOT}/bld/${sourceDirName}_rel",
       "cacheVariables": {
-      	  "CMAKE_DEFAULT_BUILD_TYPE": "Release",
-	  "CMAKE_PREFIX_PATH": "$env{DEV_ROOT}/bin/wmplugin_deps/Release",
+	  "OpendTect_DIR": "/opt/seismic/OpendTect_7.1/0.0.0",
 	  "WMDEPS_DIR": "$env{DEV_ROOT}/bin/wmplugin_deps/Release"
       },
       "condition": {
@@ -47,16 +46,17 @@
       }
     },
     {
-      "name": "default-wmplugin-deps",
-      "displayName": "Default Linux settings for wmplugin dependencies in Debug mode",
-      "description": "Defaults wmplugin_deps Debug",
+      "name": "default-wmplugin-deps-8",
+      "displayName": "Default Linux settings for wmplugin dependencies",
+      "description": "Defaults wmplugin_deps-8",
       "inherits": [
 	  "common",
 	  "sqlite",
 	  "proj"
       ],
       "cacheVariables": {
-	  "CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/${sourceDirName}/Debug"
+	  "CMAKE_MAKE_PROGRAM": "$env{DEV_ROOT}/qt/Tools/Ninja/ninja",
+	  "CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/${sourceDirName}/$<CONFIG>"
       },
       "condition": {
         "type": "equals",
@@ -65,15 +65,36 @@
       }
     },
     {
-      "name": "default-wmplugin-deps-rel",
-      "displayName": "Default Linux settings for wmplugin dependencies in Release mode",
-      "description": "Defaults wmplugin_deps Release",
+      "name": "default-wmplugin-7",
+      "displayName": "Default Linux settings for wmplugins 7 in Debug mode",
+      "description": "Defaults wmplugins-7 Debug",
       "inherits": [
-	  "default-wmplugin-deps"
+	  "common"
       ],
       "cacheVariables": {
-	  "CMAKE_DEFAULT_BUILD_TYPE": "Release",
-	  "CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/${sourceDirName}/Release"
+	  "PROJ_ROOT": "$env{APPMAN_DIR}/proj9/inst-9.3.1_rhel7_1050",
+	  "SQLite3_ROOT": "$env{APPMAN_DIR}/sqlite/inst-3.44.2_rhel7_1050",
+	  "OpendTect_DIR": "$env{DEV_ROOT}/bin/od7.0",
+	  "CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/ODPlugins/7.0.0",
+	  "CMAKE_PREFIX_PATH": "$env{DEV_ROOT}/bin/wmplugin_deps_7/Debug",
+	  "WMDEPS_DIR": "$env{DEV_ROOT}/bin/wmplugin_deps_7/Debug"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "default-wmplugin-7-rel",
+      "displayName": "Default Linux settings for wmplugins 7 in Release mode",
+      "description": "Defaults wmplugins-7 Release",
+      "inherits": "default-wmplugin-7",
+      "binaryDir": "$env{DEV_ROOT}/bld/${sourceDirName}_rel",
+      "cacheVariables": {
+	  "OpendTect_DIR": "/opt/seismic/OpendTect_7/7.0.0",
+	  "CMAKE_PREFIX_PATH": "$env{DEV_ROOT}/bin/wmplugin_deps_7/Release",
+	  "WMDEPS_DIR": "$env{DEV_ROOT}/bin/wmplugin_deps_7/Release"
       },
       "condition": {
         "type": "equals",
@@ -83,32 +104,17 @@
     },
     {
       "name": "default-wmplugin-deps-7",
-      "displayName": "Default Linux settings for wmplugin dependencies 7.0 in Debug mode",
-      "description": "Defaults wmplugin_deps_7 Debug",
+      "displayName": "Default Linux settings for wmplugin dependencies 7.0",
+      "description": "Defaults wmplugin-deps-7",
       "inherits": [
-	  "common",
-	  "sqlite",
-	  "proj"
+	  "common"
       ],
       "cacheVariables": {
-	  "CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/${sourceDirName}/Debug"
-      },
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Linux"
-      }
-    },
-    {
-      "name": "default-wmplugin-deps-7-rel",
-      "displayName": "Default Linux settings for wmplugin dependencies 7.0 in Release mode",
-      "description": "Defaults wmplugin_deps_7 Release",
-      "inherits": [
-	  "default-wmplugin-deps-7"
-      ],
-      "cacheVariables": {
-	  "CMAKE_DEFAULT_BUILD_TYPE": "Release",
-	  "CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/${sourceDirName}/Release"
+	  "CMAKE_MAKE_PROGRAM": "$env{DEV_ROOT}/qt/Tools/Ninja/ninja",
+	  "CMAKE_INSTALL_PREFIX": "$env{DEV_ROOT}/bin/${sourceDirName}/$<CONFIG>",
+	  "PROJ_ROOT": "$env{APPMAN_DIR}/proj9/inst-9.3.1_rhel7_1050",
+	  "SQLite3_ROOT": "$env{APPMAN_DIR}/sqlite/inst-3.44.2_rhel7_1050"
+
       },
       "condition": {
         "type": "equals",
