@@ -1,0 +1,31 @@
+diff --git a/CMakeModules/ODQtUtils.cmake b/CMakeModules/ODQtUtils.cmake
+index 45eaa64..75c5cb6 100644
+--- a/CMakeModules/ODQtUtils.cmake
++++ b/CMakeModules/ODQtUtils.cmake
+@@ -32,6 +32,14 @@ endmacro(ADD_TO_LIST_IF_NEW)
+ 
+ macro( QT_INSTALL_PLUGINS )
+     OD_FIND_QT()
++    if ( DEFINED ENV{CONDA_PREFIX} )
++		message( STATUS "Found Pixi environment -- adjust QT_ROOT" )
++		if ( WIN32 )
++			set( QT_ROOT "$ENV{CONDA_PREFIX}/Library/lib/qt6")
++		else()
++			set( QT_ROOT "$ENV{CONDA_PREFIX}/lib/qt6")
++		endif()
++	endif()
+     foreach( QTPLUGIN_FILE ${QT_REQ_PLUGINS} )
+ 	if ( NOT EXISTS "${QT_ROOT}/plugins/${QTPLUGIN_FILE}" )
+ 	    continue()
+diff --git a/spec/ODvisBase/CMakeLists.txt b/spec/ODvisBase/CMakeLists.txt
+index c7e9224..6f81037 100644
+--- a/spec/ODvisBase/CMakeLists.txt
++++ b/spec/ODvisBase/CMakeLists.txt
+@@ -15,6 +15,7 @@ if ( NOT APPLE )
+     if ( UNIX )
+ 	find_package( X11 )
+ 	list( APPEND EXTRA_LIBS ${X11_LIBRARIES} )
++	include_directories( ${X11_INCLUDE_DIR} )
+     endif()
+     set( OD_FOLDER "Base" )
+     set( OD_MODULE_PROGS od_glxinfo.c )
