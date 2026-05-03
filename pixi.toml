@@ -70,7 +70,7 @@ cmd = [
     "-D", "CMAKE_PREFIX_PATH=$CONDA_PREFIX"
 ]
 
-[tasks.config]
+[target.linux-64.tasks.config]
 cmd = [
     "cmake",
     "-G", "Ninja Multi-Config",
@@ -105,17 +105,11 @@ cmd = [
 
 [target.linux-64.tasks.release]
 cmd = "./inst/bin/lux64/Release/od_main"
-env = {
-        QT_QPA_PLATFORM_PLUGIN_PATH="$CONDA_PREFIX/lib/qt6/plugins/platforms", 
-        QT_QPA_PLATFORM="xcb"
-}
+env = {QT_QPA_PLATFORM="xcb"}
 
 [target.linux-64.tasks.debug]
 cmd = "./inst/bin/lux64/Debug/od_maind"
-env = {
-        QT_QPA_PLATFORM_PLUGIN_PATH="$CONDA_PREFIX/lib/qt6/plugins/platforms", 
-        QT_QPA_PLATFORM="xcb"
-}
+env = {QT_QPA_PLATFORM="xcb"}
 
 [target.win-64.tasks.release]
 cmd = "./inst/bin/win64/Release/od_main.exe"
